@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Músicas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🎵 Lista de Músicas Prometal EPIs 35 anos</h1>
+      <p class="sub">Escolha até <strong>5 músicas</strong>.</p>
+    </header>
+
+    <div id="config-alert" class="banner" style="display:none">
+      ⚙️ Configure a URL e a chave do Supabase no início do arquivo <code>script.js</code>.
+    </div>
+
+    <div class="card">
+      <form id="form" autocomplete="off">
+        <div class="row">
+          <div class="field">
+            <label for="title">Título da música</label>
+            <input id="title" type="text" placeholder="Ex: Evidências" required>
+          </div>
+          <div class="field">
+            <label for="artist">Artista</label>
+            <input id="artist" type="text" placeholder="Ex: Chitãozinho &amp; Xororó" required>
+          </div>
+        </div>
+        <button id="addBtn" type="submit">Adicionar à lista</button>
+        <p class="mine">Você já escolheu <span id="mine">0</span> de 5 músicas.</p>
+        <div id="msg" class="msg"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="list-head">
+        <h2>Na lista</h2>
+        <span class="count" id="count">0 músicas</span>
+      </div>
+      <ul id="list"></ul>
+      <div class="empty" id="empty">Carregando…</div>
+    </div>
+
+    <p class="foot">Todos veem a mesma lista. Ninguém sabe quem adicionou o quê.</p>
+  </div>
+
+  <!-- Cliente do Supabase (banco de dados compartilhado) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
