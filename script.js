@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-const SUPABASE_ANON_KEY = 'COLE_AQUI_SUA_ANON_KEY';
+const SUPABASE_URL = 'https://uoqcoezbqwvwrbpluakm.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvcWNvZXpicXd2d3JicGx1YWttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5NTY2MzIsImV4cCI6MjA5OTUzMjYzMn0.t5FDR8tKRdQhUjnIv2gVEYflaU2TSwDXQ7sPxvADfIk';
 
 // ============================================================
 //  Regras
