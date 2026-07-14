@@ -5,12 +5,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 //  Regras
 // ============================================================
 const LIMITE = 5;                 // máximo de músicas por pessoa (navegador)
-const STORAGE_KEY = 'minhasMusicasIds';// ids que ESTE navegador adicionou
+const STORAGE_KEY = 'minhasMusicasIds';
 
-// Cliente do banco
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Elementos
 const form = document.getElementById('form');
 const inTitle = document.getElementById('title');
 const inArtist = document.getElementById('artist');
@@ -32,8 +30,7 @@ function salvarMeusIds(ids) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 }
 
-// ---- Normalização p/ dedup (igual à do banco) --------------
-// minúsculas, sem acentos, espaços colapsados.
+
 function normalizar(txt) {
     return txt
         .normalize('NFD').replace(/[̀-ͯ]/g, '') // remove acentos
@@ -45,7 +42,6 @@ function chave(titulo, artista) {
     return normalizar(titulo) + ' :: ' + normalizar(artista);
 }
 
-// ---- Mensagens ---------------------------------------------
 function mostrarMsg(texto, tipo) {
     msg.textContent = texto;
     msg.className = 'msg show ' + tipo;
@@ -53,7 +49,6 @@ function mostrarMsg(texto, tipo) {
     msgTimer = setTimeout(() => { msg.className = 'msg ' + tipo; }, 3500);
 }
 
-// ---- Atualiza o contador "X de 5" e trava o form -----------
 function atualizarLimite() {
     const usados = meusIds().length;
     mineEl.textContent = usados;
@@ -104,7 +99,6 @@ function render(musicas) {
     });
 }
 
-// ---- Carrega tudo do banco ---------------------------------
 async function carregar() {
     const { data, error } = await db
         .from('lista_musicas')
@@ -120,7 +114,6 @@ async function carregar() {
     render(data);
 }
 
-// ---- Adiciona uma música -----------------------------------
 async function adicionar(titulo, artista) {
     if (meusIds().length >= LIMITE) {
         mostrarMsg('Você já escolheu suas 5 músicas.', 'error');
@@ -134,7 +127,7 @@ async function adicionar(titulo, artista) {
         .single();
 
     if (error) {
-        if (error.code === '23505') { // violação de unique = música repetida
+        if (error.code === '23505') { 
             mostrarMsg('⚠️ "' + titulo + '" de ' + artista + ' já está na lista.', 'error');
         } else {
             mostrarMsg('Não consegui adicionar agora. Tente de novo.', 'error');
@@ -164,7 +157,6 @@ async function remover(id) {
     await carregar();
 }
 
-// ---- Envio do formulário -----------------------------------
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     const titulo = inTitle.value.trim();
@@ -176,9 +168,7 @@ form.addEventListener('submit', (e) => {
     adicionar(titulo, artista);
 });
 
-// ---- Início ------------------------------------------------
 function iniciar() {
-    // Aviso amigável se ainda não configurou o Supabase.
     if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.includes('COLE_AQUI')) {
         if (banner) banner.style.display = 'block';
         empty.textContent = 'Configure o Supabase para carregar a lista.';
@@ -188,7 +178,6 @@ function iniciar() {
     atualizarLimite();
     carregar();
 
-    // Atualização ao vivo: quando alguém adiciona/remove, recarrega pra todos.
     db.channel('lista-musicas-tempo-real')
         .on('postgres_changes',
             { event: '*', schema: 'public', table: 'lista_musicas' },
