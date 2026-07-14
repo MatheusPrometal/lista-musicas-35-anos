@@ -1,4 +1,4 @@
-# 🎵 Lista de Músicas (com Supabase)
+# 🎵 Lista de Músicas Prometal EPIs 35 anos!
 
 Lista compartilhada onde cada colaborador escolhe até **5 músicas**.
 Tudo **anônimo** (não guarda quem adicionou) e **sem repetir** música
